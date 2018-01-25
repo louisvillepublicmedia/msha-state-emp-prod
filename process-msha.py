@@ -9,10 +9,9 @@ import csv, datetime, os, agate
 
 # VARIABLES TO CHANGE DEPENDING ON DATE FILES DOWNLOADED AND STATES DESIRED
 region_filter = ['KY', 'OH', 'WV']
-#msha_data_root = '/where/you/download/msha/data/'
-msha_data_root = '/Users/akanik/LPM/data/msha-data/data/'
+msha_data_root = '/absolute/path/to/your/downloaded/msha/data/'
 
-# VARIABLES
+# OTHER VARIABLES
 today = datetime.datetime.now()
 process_date = today.strftime('%Y%m%d')
 msha_cy_oprtr_emplymnt = msha_data_root + 'msha_cy_oprtr_emplymnt.csv'
