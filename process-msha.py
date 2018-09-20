@@ -9,13 +9,25 @@ import csv, datetime, os, agate
 
 # VARIABLES TO CHANGE DEPENDING ON DATE FILES DOWNLOADED AND STATES DESIRED
 region_filter = ['KY', 'OH', 'WV']
-msha_data_root = '/absolute/path/to/your/downloaded/msha/data/'
+#msha_data_root = '/absolute/path/to/your/downloaded/msha/data/'
+msha_data_root = '/Users/akanik/LPM/data/msha-data/msha-state-emp-prod/data/'
 
 # OTHER VARIABLES
 today = datetime.datetime.now()
 process_date = today.strftime('%Y%m%d')
 msha_cy_oprtr_emplymnt = msha_data_root + 'msha_cy_oprtr_emplymnt.csv'
 msha_mine = msha_data_root + 'msha_mine.csv'
+
+
+def get_us_region_filter():
+    states = agate.Table.from_csv(msha_data_root + 'states-abbreviations.csv')
+    
+    states_list = []
+    for row in states.rows:
+        states_list.append(str(row['Abbreviation']))
+        
+    return states_list
+
 
 
 def get_state_coal_mines(state_list):
@@ -135,8 +147,38 @@ def create_employment_production():
             
             
             
-filter_individual_state_operator_data(region_filter)
-filter_regional_operator_data(region_filter)
+
+def create_national_employment_production():
+    
+    # create a 'by_year' directory if it doesn't already exist
+    directory = msha_data_root + 'by_year/'
+    new_emp_file = directory + 'annual_msha_op_emply.csv'
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+    
+    
+    with open(new_emp_file, 'w') as new_oef:
+        with open(msha_cy_oprtr_emplymnt) as oef:
+            oef_reader = csv.DictReader(oef)
+            oef_header = oef_reader.fieldnames
+            new_oef_writer = csv.DictWriter(new_oef, fieldnames=oef_header)
+            
+            new_oef_writer.writeheader()
+            
+            # go through the downloaded msha_cy_oprtr_emplymnt file and write rows to
+            # a new csv, only if the mine_id is in our region
+            for row in oef_reader:
+                if row['calendar_yr'] == '2017':
+                    new_oef_writer.writerow(row)
+                    
+    new_oef.close()
+            
+            
+#get_us_region_filter()
+#create_national_employment_production()           
+#filter_individual_state_operator_data(region_filter)
+national_filter = get_us_region_filter()
+filter_regional_operator_data(national_filter)
 create_employment_production()
 
     
