@@ -15,4 +15,4 @@ That should be all you need. You will be able to view state and/or regionally fi
 `path/to/your/downloaded/msha/data/filtered` and the employment and production numbers, by year, here: `path/to/your/downloaded/msha/data/filtered/by_year`
 
 ## Data disclaimer
-The file **msha_cy_oprtr_emplymnt** does not contain contract workers employed at state mines. There is a dataset for mine contractors, but the data do not allow us to attach a worker with a single mine. Because of this, national operational + contract employment can be calculated, but state and regional operational + contract employment cannot. 
+The file **msha_cy_oprtr_emplymnt** does not contain data on contract workers employed at state mines. In other words, the data do not allow us to attach a contracted worker with a single mine, therefore we cannot aggregate contract workers by state. Because of this, national operational + contract employment can be calculated, but state and regional operational + contract employment cannot. 
