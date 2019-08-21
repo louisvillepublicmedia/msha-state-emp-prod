@@ -180,5 +180,3 @@ def create_national_employment_production():
 national_filter = get_us_region_filter()
 filter_regional_operator_data(national_filter)
 create_employment_production()
-
-    
